@@ -34,6 +34,7 @@ school-management/
 | POST   | `/api/students` | Create a new student |
 | GET    | `/api/students/{id}` | Get student by ID |
 | GET    | `/api/students` | Get all students |
+| GET    | `/api/students/search?query=name` | Search students by name |
 | PUT    | `/api/students/{id}` | Update student by ID |
 | DELETE | `/api/students/{id}` | Delete student by ID |
 

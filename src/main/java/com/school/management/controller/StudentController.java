@@ -37,6 +37,13 @@ public class StudentController {
         return ResponseEntity.ok(students);
     }
 
+    // Build Search Students REST API
+    @GetMapping("/search")
+    public ResponseEntity<List<StudentDto>> searchStudents(@RequestParam("query") String query) {
+        List<StudentDto> students = studentService.searchStudents(query);
+        return ResponseEntity.ok(students);
+    }
+
     // Build Update Student REST API
     @PutMapping("{id}")
     public ResponseEntity<StudentDto> updateStudent(@PathVariable("id") Long studentId,

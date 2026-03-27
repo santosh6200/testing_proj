@@ -40,6 +40,13 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public List<StudentDto> searchStudents(String query) {
+        List<Student> students = studentRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(query, query);
+        return students.stream().map(StudentMapper::mapToStudentDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public StudentDto updateStudent(Long studentId, StudentDto updatedStudent) {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Student does not exist with given id: " + studentId));
