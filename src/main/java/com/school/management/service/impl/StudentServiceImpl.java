@@ -81,4 +81,15 @@ public class StudentServiceImpl implements StudentService {
                 .orElseThrow(() -> new ResourceNotFoundException("Student does not exist with given id: " + studentId));
         studentRepository.deleteById(studentId);
     }
+
+    @Override
+    public List<StudentDto> getStudentsByDepartment(Long departmentId) {
+        // Verify department exists
+        departmentRepository.findById(departmentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Department does not exist with given id: " + departmentId));
+
+        List<Student> students = studentRepository.findByDepartmentId(departmentId);
+        return students.stream().map(StudentMapper::mapToStudentDto)
+                .collect(Collectors.toList());
+    }
 }

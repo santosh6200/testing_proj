@@ -15,6 +15,7 @@ import java.util.List;
 public class DepartmentController {
 
     private DepartmentService departmentService;
+    private com.school.management.service.StudentService studentService;
 
     // Build Add Department REST API
     @PostMapping
@@ -50,5 +51,12 @@ public class DepartmentController {
     public ResponseEntity<String> deleteDepartment(@PathVariable("id") Long departmentId) {
         departmentService.deleteDepartment(departmentId);
         return ResponseEntity.ok("Department deleted successfully!");
+    }
+
+    // Build Get Students by Department REST API
+    @GetMapping("{id}/students")
+    public ResponseEntity<List<com.school.management.dto.StudentDto>> getStudentsByDepartment(@PathVariable("id") Long departmentId) {
+        List<com.school.management.dto.StudentDto> students = studentService.getStudentsByDepartment(departmentId);
+        return ResponseEntity.ok(students);
     }
 }
