@@ -40,6 +40,13 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
+    public List<DepartmentDto> searchDepartments(String query) {
+        List<Department> departments = departmentRepository.findByDepartmentNameContainingIgnoreCase(query);
+        return departments.stream().map(DepartmentMapper::mapToDepartmentDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public DepartmentDto updateDepartment(Long departmentId, DepartmentDto updatedDepartment) {
         Department department = departmentRepository.findById(departmentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Department does not exist with given id: " + departmentId));

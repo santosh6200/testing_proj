@@ -11,6 +11,8 @@ public interface DepartmentService {
 
     List<DepartmentDto> getAllDepartments();
 
+    List<DepartmentDto> searchDepartments(String query);
+
     DepartmentDto updateDepartment(Long departmentId, DepartmentDto updatedDepartment);
 
     void deleteDepartment(Long departmentId);

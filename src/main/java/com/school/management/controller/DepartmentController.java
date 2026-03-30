@@ -38,6 +38,13 @@ public class DepartmentController {
         return ResponseEntity.ok(departments);
     }
 
+    // Build Search Departments REST API
+    @GetMapping("/search")
+    public ResponseEntity<List<DepartmentDto>> searchDepartments(@RequestParam("query") String query) {
+        List<DepartmentDto> departments = departmentService.searchDepartments(query);
+        return ResponseEntity.ok(departments);
+    }
+
     // Build Update Department REST API
     @PutMapping("{id}")
     public ResponseEntity<DepartmentDto> updateDepartment(@PathVariable("id") Long departmentId,
