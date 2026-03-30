@@ -17,10 +17,18 @@ import java.util.stream.Collectors;
 public class StudentServiceImpl implements StudentService {
 
     private StudentRepository studentRepository;
+    private com.school.management.repository.DepartmentRepository departmentRepository;
 
     @Override
     public StudentDto createStudent(StudentDto studentDto) {
         Student student = StudentMapper.mapToStudent(studentDto);
+        
+        if (studentDto.getDepartmentId() != null) {
+            com.school.management.entity.Department department = departmentRepository.findById(studentDto.getDepartmentId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Department does not exist with given id: " + studentDto.getDepartmentId()));
+            student.setDepartment(department);
+        }
+
         Student savedStudent = studentRepository.save(student);
         return StudentMapper.mapToStudentDto(savedStudent);
     }
@@ -54,6 +62,14 @@ public class StudentServiceImpl implements StudentService {
         student.setFirstName(updatedStudent.getFirstName());
         student.setLastName(updatedStudent.getLastName());
         student.setEmail(updatedStudent.getEmail());
+
+        if (updatedStudent.getDepartmentId() != null) {
+            com.school.management.entity.Department department = departmentRepository.findById(updatedStudent.getDepartmentId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Department does not exist with given id: " + updatedStudent.getDepartmentId()));
+            student.setDepartment(department);
+        } else {
+            student.setDepartment(null);
+        }
 
         Student updatedStudentObj = studentRepository.save(student);
         return StudentMapper.mapToStudentDto(updatedStudentObj);
