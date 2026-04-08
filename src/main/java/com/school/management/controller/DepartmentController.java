@@ -66,4 +66,10 @@ public class DepartmentController {
         List<com.school.management.dto.StudentDto> students = studentService.getStudentsByDepartment(departmentId);
         return ResponseEntity.ok(students);
     }
+
+    // Intentional Error Endpoint for Testing Logs
+    @GetMapping("/test/force-error")
+    public ResponseEntity<String> forceErrorEndpoint() {
+        throw new RuntimeException("This is an intentionally forced error for testing logs!");
+    }
 }
