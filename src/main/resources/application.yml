@@ -9,10 +9,7 @@ spring:
       connection-timeout: 5000
     
   jpa:
-<<<<<<< HEAD
     database-platform: org.hibernate.dialect.MySQLDialect
-=======
->>>>>>> 8bad48cb6a402ce796c6b44e7d3bb3f0f8df320b
     open-in-view: false
     hibernate:
       ddl-auto: update
