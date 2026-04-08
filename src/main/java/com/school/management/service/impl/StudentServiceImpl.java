@@ -17,10 +17,18 @@ import java.util.stream.Collectors;
 public class StudentServiceImpl implements StudentService {
 
     private StudentRepository studentRepository;
+    private com.school.management.repository.DepartmentRepository departmentRepository;
 
     @Override
     public StudentDto createStudent(StudentDto studentDto) {
         Student student = StudentMapper.mapToStudent(studentDto);
+        
+        if (studentDto.getDepartmentId() != null) {
+            com.school.management.entity.Department department = departmentRepository.findById(studentDto.getDepartmentId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Department does not exist with given id: " + studentDto.getDepartmentId()));
+            student.setDepartment(department);
+        }
+
         Student savedStudent = studentRepository.save(student);
         return StudentMapper.mapToStudentDto(savedStudent);
     }
@@ -55,6 +63,14 @@ public class StudentServiceImpl implements StudentService {
         student.setLastName(updatedStudent.getLastName());
         student.setEmail(updatedStudent.getEmail());
 
+        if (updatedStudent.getDepartmentId() != null) {
+            com.school.management.entity.Department department = departmentRepository.findById(updatedStudent.getDepartmentId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Department does not exist with given id: " + updatedStudent.getDepartmentId()));
+            student.setDepartment(department);
+        } else {
+            student.setDepartment(null);
+        }
+
         Student updatedStudentObj = studentRepository.save(student);
         return StudentMapper.mapToStudentDto(updatedStudentObj);
     }
@@ -64,5 +80,16 @@ public class StudentServiceImpl implements StudentService {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Student does not exist with given id: " + studentId));
         studentRepository.deleteById(studentId);
+    }
+
+    @Override
+    public List<StudentDto> getStudentsByDepartment(Long departmentId) {
+        // Verify department exists
+        departmentRepository.findById(departmentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Department does not exist with given id: " + departmentId));
+
+        List<Student> students = studentRepository.findByDepartmentId(departmentId);
+        return students.stream().map(StudentMapper::mapToStudentDto)
+                .collect(Collectors.toList());
     }
 }

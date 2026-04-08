@@ -6,20 +6,25 @@ import com.school.management.entity.Student;
 public class StudentMapper {
 
     public static StudentDto mapToStudentDto(Student student) {
+        Long departmentId = null;
+        if (student.getDepartment() != null) {
+            departmentId = student.getDepartment().getId();
+        }
         return new StudentDto(
                 student.getId(),
                 student.getFirstName(),
                 student.getLastName(),
-                student.getEmail()
+                student.getEmail(),
+                departmentId
         );
     }
 
     public static Student mapToStudent(StudentDto studentDto) {
-        return new Student(
-                studentDto.getId(),
-                studentDto.getFirstName(),
-                studentDto.getLastName(),
-                studentDto.getEmail()
-        );
+        Student student = new Student();
+        student.setId(studentDto.getId());
+        student.setFirstName(studentDto.getFirstName());
+        student.setLastName(studentDto.getLastName());
+        student.setEmail(studentDto.getEmail());
+        return student;
     }
 }
