@@ -1,15 +1,27 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/schooldb
+    url: jdbc:mysql://localhost:3306/schoold
     username: root
     password: Santosh@123
     driver-class-name: com.mysql.cj.jdbc.Driver
-
+    hikari:
+      initialization-fail-timeout: 0
+      connection-timeout: 5000
+    
   jpa:
-    database-platform: org.hibernate.dialect.MySQL8Dialect
+<<<<<<< HEAD
+    database-platform: org.hibernate.dialect.MySQLDialect
+=======
+>>>>>>> 8bad48cb6a402ce796c6b44e7d3bb3f0f8df320b
+    open-in-view: false
     hibernate:
       ddl-auto: update
     show-sql: true
 
 server:
   port: 8087
+
+app:
+  security:
+    api-token: SchoolSecretToken123
+    api-token-header: X-API-KEY
