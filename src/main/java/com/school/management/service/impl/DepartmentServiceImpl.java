@@ -20,48 +20,31 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public DepartmentDto createDepartment(DepartmentDto departmentDto) {
-        Department department = DepartmentMapper.mapToDepartment(departmentDto);
-        Department savedDepartment = departmentRepository.save(department);
-        return DepartmentMapper.mapToDepartmentDto(savedDepartment);
+        throw new RuntimeException("Department API is currently disabled.");
     }
 
     @Override
     public DepartmentDto getDepartmentById(Long departmentId) {
-        Department department = departmentRepository.findById(departmentId)
-                .orElseThrow(() -> new ResourceNotFoundException("Department does not exist with given id: " + departmentId));
-        return DepartmentMapper.mapToDepartmentDto(department);
+        throw new RuntimeException("Department data fetching is currently disabled.");
     }
 
     @Override
     public List<DepartmentDto> getAllDepartments() {
-        List<Department> departments = departmentRepository.findAll();
-        return departments.stream().map(DepartmentMapper::mapToDepartmentDto)
-                .collect(Collectors.toList());
+        throw new RuntimeException("Department data fetching is currently disabled.");
     }
 
     @Override
     public List<DepartmentDto> searchDepartments(String query) {
-        List<Department> departments = departmentRepository.findByDepartmentNameContainingIgnoreCase(query);
-        return departments.stream().map(DepartmentMapper::mapToDepartmentDto)
-                .collect(Collectors.toList());
+        throw new RuntimeException("Department data fetching is currently disabled.");
     }
 
     @Override
     public DepartmentDto updateDepartment(Long departmentId, DepartmentDto updatedDepartment) {
-        Department department = departmentRepository.findById(departmentId)
-                .orElseThrow(() -> new ResourceNotFoundException("Department does not exist with given id: " + departmentId));
-
-        department.setDepartmentName(updatedDepartment.getDepartmentName());
-        department.setDepartmentDescription(updatedDepartment.getDepartmentDescription());
-
-        Department savedDepartment = departmentRepository.save(department);
-        return DepartmentMapper.mapToDepartmentDto(savedDepartment);
+        throw new RuntimeException("Department API is currently disabled.");
     }
 
     @Override
     public void deleteDepartment(Long departmentId) {
-        Department department = departmentRepository.findById(departmentId)
-                .orElseThrow(() -> new ResourceNotFoundException("Department does not exist with given id: " + departmentId));
-        departmentRepository.deleteById(departmentId);
+        throw new RuntimeException("Department API is currently disabled.");
     }
 }
